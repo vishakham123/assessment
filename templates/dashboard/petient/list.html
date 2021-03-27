@@ -1,0 +1,192 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+
+{% block title %}
+  Petient | List
+{% endblock title %}
+
+{% block custom_css %}
+<style>
+    .btn-fab-fixed {
+        right: calc(25% - 60px);
+    }
+    
+    .btn-fab-fixed {
+      position: absolute;
+      top: 98px;
+      right: 25%;
+  }
+
+
+    .btn-fab-default:hover{
+        background-color: #26a5d4;
+    }
+
+    .btn-fab-default:hover{
+       box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 1px 7px 0 rgba(0,0,0,.12),0 3px 1px -1px rgba(0,0,0,.2);
+    }
+
+    .waves-effect {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        vertical-align: middle;
+        z-index: 1;
+        transition: .3s ease-out;
+    }
+
+    .btn-fab-default {
+        height: 54px;
+        line-height: 54px;
+        width: 56px;
+    }
+    
+   
+    .btn-fab-default {
+        display: inline-block;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        padding: 0;
+        background-color: #26a5d4;
+        border-radius: 50%;
+        transition: .3s;
+        cursor: pointer;
+        vertical-align: middle;
+    }
+ 
+    .btn-fab-default {
+        text-decoration: none;
+        color: #fff;
+        background-color: #26a5d4;
+        text-align: center;
+        letter-spacing: .5px;
+        transition: .2s ease-out;
+        cursor: pointer;
+    }
+
+    .btn-fab-default svg {
+        vertical-align: middle;
+    }
+
+    svg:not(:root) {
+        overflow: hidden;
+    }
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+  <ul class="breadcrumbs">
+    <li class="visible-s">
+        Petients
+    </li>
+  </ul>
+{% endblock %}
+
+{% block header_extra %}
+  <div class="btn-fab-fixed">
+    <a href="{% url 'dashboard:petient-create' %}" class="btn-fab-default waves-effect waves-light" >
+    <svg fill="#ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" data-src="/static/admin/img/add.svg" class="injected-svg">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" role="presentation"></path>
+        <path d="M0 0h24v24H0z" fill="none" role="presentation"></path>
+    </svg>
+    </a>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  {% if petients %}
+    <table class="table table-light table-striped" id="list_table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date of Birth</th>
+          <th colspan="2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- jinja2 Technique -->
+      {% if petients %}  
+      {% for petient in petients %}
+        <tr>
+          <td>{{petient}}</td>
+          <td>{{petient.birth_date}}</td>
+          <td>
+            <button type="button" class="btn btn-light">
+              <a href="{% url "dashboard:petient-details" pk=petient.pk %}" class="btn-flat waves-effect" >View</a></button>
+              <button type="button" class="btn btn-light" id="delete" data-ref={{petient.pk}} style="cursor: pointer;">
+                  Delete
+              </button>
+              
+
+          </td>
+        </tr>
+      {% endfor %}
+      {% endif %}
+      </tbody>
+    </table>
+
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+  {% else %}
+  <h5>No Data found</h5>
+  {% endif %}
+  </div>
+  </body>
+  </html>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+  <script>
+  $("#delete").on("click", function(event){
+      event.preventDefault();
+      var pk = $(this).attr('data-ref');
+      var data = {
+          "csrfmiddlewaretoken":$("input[name='csrfmiddlewaretoken']").val()
+      };
+      $.ajax({
+          url: "/dashboard/delete/"+pk+"/",
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data) {
+              if (data['success']){
+                $("#list_table").load(window.location + " #list_table");
+              }
+          }
+      });
+  });
+  </script>
+  {% endblock %}

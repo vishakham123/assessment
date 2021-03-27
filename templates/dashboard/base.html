@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+        <title>{% block title %} {% endblock title %} </title>
+        {% block custom_css %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <div id="notification" class="col-md-offset-1 col-xs-offset-1 col col-md-6 col-xs-6 alert"><div></div></div>
+        </header>
+        <div class="subheader top-nav">
+            <div class="nav-wrapper container">
+                {% block breadcrumbs %}
+                <ul class="breadcrumbs">
+                    <li class="visible-s">
+                        <a href="#">
+                                Home
+              
+                        </a>
+                    </li>
+                </ul>
+                {% endblock %}
+                {% block header_extra %}{% endblock %}
+            </div>
+        </div>
+       
+        <main class="main">
+            <div id="base-modal" class="modal"></div>
+            <div id="base-modal-fixed" class="modal modal-fixed-footer"></div>
+            <div class="container">
+                {% block content %}{% endblock %}
+                <div id="dashboard-app"></div>
+            </div>
+        </main>
+    </body>
+    
+    <script>
+
+  
+    </script>
+</html>

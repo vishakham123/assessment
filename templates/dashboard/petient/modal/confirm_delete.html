@@ -1,0 +1,20 @@
+{% extends "dashboard/base_modal.html" %}
+
+{% block action_url %}
+{% url 'dashboard:petient-delete' pk=petient.pk %}
+{% endblock %}
+
+{% block title %}
+  Remove petient {{ petient }}
+{% endblock %}
+
+{% block content %}
+  <div class="col s12">
+      Are you sure you want to remove customer <strong>{{ petient }}</strong>?
+     
+  </div>
+{% endblock content %}
+
+{% block primary_action %}
+Remove
+{% endblock %}

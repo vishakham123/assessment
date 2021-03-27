@@ -1,0 +1,83 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+  {% if petient.pk %}
+    {{ petient }}
+  {% else %}
+  Petient | Add
+  {% endif %}
+{% endblock %}
+
+{% block custom_css %}
+<style>
+  .errorlist
+    {
+        color: red;
+    }
+</style>
+
+{% endblock %}
+{% block breadcrumbs %}
+  <ul class="breadcrumbs breadcrumbs--history">
+    <li>
+      <a href="{% url "dashboard:petient-list" %}">
+        Petient
+      </a> > {{ petient }}
+    </li>
+   
+  </ul>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col s12 l8">
+        <div style="margin-top: 40px;"></div>
+        
+        {% if form %}
+        <form class="" method="post" id="form-customer" enctype="multipart/form-data" novalidate>
+           
+                {% csrf_token %}
+                <!-- {{ form }} -->
+                {% for field in form.visible_fields %}
+                <div class="form-group">
+                {{ field.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if field.errors %}
+                    {% render_field field class="form-control is-invalid" %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                        {{ error }}
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                    {% render_field field class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field field class="form-control" %}
+                {% endif %}
+
+              
+                </div>
+            {% endfor %}
+            
+               
+            <div class="card-action right-align">
+            <a href="/dashboard/view/"  class="btn-flat waves-effect">
+                    Cancel</a>
+            {% if petient.pk %}
+                <button type="submit" class="btn waves-effect customer-form-submit">
+                    Update
+                </button>
+            {% else %}
+                <button type="submit" class="btn waves-effect customer-form-submit">
+                    Add
+                </button>
+            {% endif %}
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+0001_initial.py	../user/migrations/0001_initial.py	1;"	kind:file	line:1
+ALLOWED_HOSTS	../user_dashboard/settings.py	/^ALLOWED_HOSTS = ['*']$/;"	kind:variable	line:29
+AUTH_PASSWORD_VALIDATORS	../user_dashboard/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:102
+AUTH_USER_MODEL	../user_dashboard/settings.py	/^AUTH_USER_MODEL = "user.User" $/;"	kind:variable	line:33
+BASE_DIR	../user_dashboard/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:17
+DATABASES	../user_dashboard/settings.py	/^DATABASES = {$/;"	kind:variable	line:92
+DEBUG	../user_dashboard/settings.py	/^DEBUG = True$/;"	kind:variable	line:27
+INSTALLED_APPS	../user_dashboard/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:37
+LANGUAGE_CODE	../user_dashboard/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:121
+MIDDLEWARE	../user_dashboard/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:49
+Migration	../user/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:6
+PROJECT_ROOT	../user_dashboard/settings.py	/^PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))$/;"	kind:variable	line:31
+ROOT_URLCONF	../user_dashboard/settings.py	/^ROOT_URLCONF = 'user_dashboard.urls'$/;"	kind:variable	line:59
+STATIC_URL	../user_dashboard/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:135
+TEMPLATES	../user_dashboard/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:61
+TIME_ZONE	../user_dashboard/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:123
+USERNAME_FIELD	../user/models.py	/^    USERNAME_FIELD = 'email'/;"	kind:variable	line:17
+USE_I18N	../user_dashboard/settings.py	/^USE_I18N = True$/;"	kind:variable	line:125
+USE_L10N	../user_dashboard/settings.py	/^USE_L10N = True$/;"	kind:variable	line:127
+USE_TZ	../user_dashboard/settings.py	/^USE_TZ = True$/;"	kind:variable	line:129
+User	../user/models.py	/^class User(PermissionsMixin, AbstractBaseUser):$/;"	kind:class	line:8
+User	../user/views.py	/^User = apps.get_model('user', 'User')$/;"	kind:variable	line:5
+UserConfig	../user/apps.py	/^class UserConfig(AppConfig):$/;"	kind:class	line:4
+WSGI_APPLICATION	../user_dashboard/settings.py	/^WSGI_APPLICATION = 'user_dashboard.wsgi.application'$/;"	kind:variable	line:78
+__init__.py	../user/__init__.py	1;"	kind:file	line:1
+__init__.py	../user/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	../user_dashboard/__init__.py	1;"	kind:file	line:1
+__str__	../user/models.py	/^    def __str__(self):$/;"	kind:member	line:14
+admin.py	../user/admin.py	1;"	kind:file	line:1
+application	../user_dashboard/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+apps.py	../user/apps.py	1;"	kind:file	line:1
+birth_date	../user/models.py	/^    birth_date = models.DateField(null=True, blank=True)$/;"	kind:variable	line:12
+conn_max_age	../user_dashboard/settings.py	/^        conn_max_age=600)}$/;"	kind:variable	line:96
+default	../user_dashboard/settings.py	/^        default='postgres:\/\/postgres:postgres@localhost:5432\/petient',$/;"	kind:variable	line:95
+dependencies	../user/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:10
+email	../user/models.py	/^    email = models.EmailField(unique=True, blank=True)$/;"	kind:variable	line:9
+fields	../user/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:17
+first_name	../user/models.py	/^    first_name = models.CharField(max_length=256, blank=False)$/;"	kind:variable	line:10
+forms.py	../user/forms.py	1;"	kind:file	line:1
+initial	../user/migrations/0001_initial.py	/^    initial = True$/;"	kind:variable	line:8
+last_name	../user/models.py	/^    last_name = models.CharField(max_length=256, blank=False)$/;"	kind:variable	line:11
+manage.py	../manage.py	1;"	kind:file	line:1
+models.py	../user/models.py	1;"	kind:file	line:1
+name	../user/apps.py	/^    name = 'user'$/;"	kind:variable	line:5
+name	../user/migrations/0001_initial.py	/^            name='User',$/;"	kind:variable	line:16
+operations	../user/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:14
+options	../user/migrations/0001_initial.py	/^            options={$/;"	kind:variable	line:29
+petient_list	../user/views.py	/^def petient_list(request):$/;"	kind:function	line:8
+settings.py	../user_dashboard/settings.py	1;"	kind:file	line:1
+tests.py	../user/tests.py	1;"	kind:file	line:1
+urlpatterns	../user/urls.py	/^urlpatterns = [$/;"	kind:variable	line:5
+urlpatterns	../user_dashboard/urls.py	/^urlpatterns = [$/;"	kind:variable	line:21
+urls.py	../user/urls.py	1;"	kind:file	line:1
+urls.py	../user_dashboard/urls.py	1;"	kind:file	line:1
+views.py	../user/views.py	1;"	kind:file	line:1
+wsgi.py	../user_dashboard/wsgi.py	1;"	kind:file	line:1
