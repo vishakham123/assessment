@@ -18,7 +18,6 @@ class CustomerForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         if self.instance:
-            print("-------------rr-------------->")
             print(self.instance.birth_date)
             self.fields['birth_date'].initial = self.instance.birth_date
             

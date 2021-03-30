@@ -106,86 +106,85 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="container">
-  {% if petients %}
-    <table class="table table-light table-striped" id="list_table">
-      <thead>
+<table class="table table-light table-striped" id="list_table">
+    <thead>  
         <tr>
-          <th>Name</th>
-          <th>Date of Birth</th>
-          <th colspan="2">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-      <!-- jinja2 Technique -->
-      {% if petients %}  
-      {% for petient in petients %}
-        <tr>
-          <td>{{petient}}</td>
-          <td>{{petient.birth_date}}</td>
-          <td>
-            <button type="button" class="btn btn-light">
-              <a href="{% url "dashboard:petient-details" pk=petient.pk %}" class="btn-flat waves-effect" >View</a></button>
-              <button type="button" class="btn btn-light" id="delete" data-ref={{petient.pk}} style="cursor: pointer;">
-                  Delete
-              </button>
-              
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th colspan="2">Action</th>
+        </tr>      
+    </thead>
+    <tbody>
 
-          </td>
-        </tr>
-      {% endfor %}
-      {% endif %}
-      </tbody>
-    </table>
+    </tbody>
+</table>
+{% endblock %}
 
-    {% if is_paginated %}
-    <ul class="pagination">
-      {% if page_obj.has_previous %}
-        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&laquo;</span></li>
-      {% endif %}
-      {% for i in paginator.page_range %}
-        {% if page_obj.number == i %}
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-        {% else %}
-          <li><a href="?page={{ i }}">{{ i }}</a></li>
-        {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&raquo;</span></li>
-      {% endif %}
-    </ul>
-  {% endif %}
-  {% else %}
-  <h5>No Data found</h5>
-  {% endif %}
-  </div>
-  </body>
-  </html>
- 
-  <script>
-  $("#delete").on("click", function(event){
-      event.preventDefault();
-      var pk = $(this).attr('data-ref');
-      var data = {
-          "csrfmiddlewaretoken":$("input[name='csrfmiddlewaretoken']").val()
-      };
-      $.ajax({
-          url: "/dashboard/delete/"+pk+"/",
-          type: "GET",
-          data: data,
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function (data) {
-              if (data['success']){
-                $("#list_table").load(window.location + " #list_table");
-              }
-          }
-      });
-  });
-  </script>
-  {% endblock %}
+{% block extra_script %}
+<script>
+function myfunction(id) {
+    var pk = id;
+    var data = {
+        "csrfmiddlewaretoken":$("input[name='csrfmiddlewaretoken']").val()
+    };
+    $.ajax({
+        url: "/dashboard/delete/"+pk+"/",
+        type: "GET",
+        data: data,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            if (data['success']){
+            // $("#list_table").load(window.location + " #list_table");
+            $('#tr_'+id).remove();
+            
+            }
+        }
+    });
+}
+
+$(document).ready(function () { 
+    $.ajax({
+       type : "GET", 
+       url: "{% url 'dashboard:list' %}",
+       data: {
+       },
+       
+       success: function(data){
+        $.each(data, function(key,val) {
+            $('#list_table').append(
+                    '<tr id="tr_'+val['id']+'"><td id="name">'+val['first_name']+" "+val['last_name']+'</td>' +
+                    '<td id="birth_date">'+val['birth_date']+'</td><td><button type="button" class="btn btn-light"> \
+                    <a href="/dashboard/details/'+val['id']+'/" class="btn-flat waves-effect" >View</a></button><button onclick="myfunction('+val['id']+')" style="margin-left:5px;" type="button" class="btn btn-light" id="delete_'+val['id']+'" data-ref='+val['id']+' style="cursor: pointer;">Delete</button></td></tr>')
+                    ;
+
+            });
+        }
+
+
+   });
+   
+});
+
+
+// $("#delete").on("click", function(event){
+//     //   event.preventDefault();
+//       var pk = $(this).attr('data-ref');
+//       var data = {
+//           "csrfmiddlewaretoken":$("input[name='csrfmiddlewaretoken']").val()
+//       };
+//       $.ajax({
+//           url: "/dashboard/delete/"+pk+"/",
+//           type: "GET",
+//           data: data,
+//           contentType: "application/json; charset=utf-8",
+//           dataType: "json",
+//           success: function (data) {
+//               if (data['success']){
+//                 $("#list_table").load(window.location + " #list_table");
+//               }
+//           }
+//       });
+//   });
+</script>
+{% endblock %}

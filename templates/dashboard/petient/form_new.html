@@ -1,0 +1,141 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+  {% if petient.pk %}
+    {{ petient }}
+  {% else %}
+  Petient | Add
+  {% endif %}
+{% endblock %}
+
+{% block custom_css %}
+<style>
+  .errorlist
+    {
+        color: red;
+    }
+</style>
+
+{% endblock %}
+{% block breadcrumbs %}
+  <ul class="breadcrumbs breadcrumbs--history">
+    <li>
+      <a href="{% url "dashboard:petient-list" %}">
+        Petient
+      </a> > 
+      {% if petient.pk %}
+        Edit Petient > {{ petient }}
+      {% else %}
+        Add Petient
+      {% endif %}
+    </li>
+   
+  </ul>
+{% endblock %}
+{% block content %}
+<form class="form" method="post" id="form-customer">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="first_name">First Name:</label>
+      <input type="text" class="form-control" id="first_name" name="first_name">
+      <p id="firstname_error" style="color: red;" >**Firstname is missing
+      </p>
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name:</label>
+      <input type="text" class="form-control" id="last_name" name="last_name">
+      <p id="lastname_error" style="color: red;" >**Lastname is missing
+        </p>
+    </div>
+
+    <div class="form-group">
+        <label for="birth_date">Date of Birth:</label>
+        <input type="date" class="form-control" id="birth_date" name="birth_date">
+    </div>
+
+    <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select class="form-control" id="gender">
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+  </form> 
+{% endblock %}
+{% block extra_script %}
+<script>
+$(document).ready(function () { 
+  // validate first name
+  $('#firstname_error').hide();    
+  $('#first_name').keyup(function () {
+      validateFirstname();
+  });
+    
+  function validateFirstname() {
+  var first_name = $('#first_name').val();
+    if (first_name.length == '') {
+    $('#firstname_error').show();
+        return false;
+    } 
+    else {
+        $('#firstname_error').hide();
+    }
+  }
+
+  // validate first name
+  $('#lastname_error').hide();    
+  $('#last_name').keyup(function () {
+      validateLastname();
+  });
+    
+  function validateLastname() {
+  var last_name = $('#last_name').val();
+    if (last_name.length == '') {
+    $('#lastname_error').show();
+        return false;
+    } 
+    else {
+        $('#lastname_error').hide();
+    }
+  }
+
+
+
+$('#submit').on('click', function(e){
+  e.preventDefault();
+  validateFirstname()
+  validateLastname()
+  $.ajax({
+       type : "POST", 
+       url: "{% url 'dashboard:ajax-form' %}",
+       data: {
+        first_name : $('#first_name').val(),
+        last_name : $('#last_name').val(),
+        birth_date : $("#birth_date").val(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        dataType: "json",
+
+       },
+       
+       success: function(data){
+        if (data['status'] == true){
+          window.location = "{% url 'dashboard:petient-list' %}";
+        }
+       },
+
+       failure: function() {
+           
+       }
+
+
+   });
+
+});
+});
+</script>
+{% endblock extra_script %}

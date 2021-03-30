@@ -12,44 +12,51 @@ from .forms import CustomerForm
 
 User = apps.get_model('user', 'User')
 
-class UserListView(ListView):
-    model = User
-    template_name = 'dashboard/petient/list.html'  # Default: <app_label>/<model_name>_list.html
-    context_object_name = 'petients'  # Default: object_list
-    paginate_by = 10
-    queryset = User.objects.all()  # Default: Model.objects.all()
-# Create your views here.
-# def petient_list(request):
-#     petients = User.objects.all().order_by("-id")
-#     page = request.GET.get('page', 1)
+# class UserListView(ListView):
+#     model = User
+#     template_name = 'dashboard/petient/list.html'  
+#     context_object_name = 'petients'  
+#     paginate_by = 10
+#     queryset = User.objects.all() 
+def listView(request):
+    return TemplateResponse(request, 'dashboard/petient/list_new.html')
 
-#     paginator = Paginator(petients, 10)
-#     try:
-#         petients = paginator.page(page)
-#     except PageNotAnInteger:
-#         petients = paginator.page(1)
-#     except EmptyPage:
-#         petients = paginator.page(paginator.num_pages)
+def userList(request):
+    data = []
+    users = User.objects.all()
+    for i in users:
+        res = {}
+        res['id'] = i.id
+        res['first_name'] = i.first_name
+        res['last_name'] = i.last_name
+        res['birth_date'] = i.birth_date
+        data.append(res)
 
-#     print(petients)
-#     ctx = {
-#         "petients": petients
-#     }
-#     return TemplateResponse(request, 'dashboard/petient/list.html', ctx)
+    return JsonResponse(data, safe=False)
+
+
 
 def create_petient(request):
-    petient = User()
-    form = CustomerForm(request.POST or None, instance=petient)
-    if form.is_valid():
-        user = form.save()
-        msg = pgettext_lazy(
-                'Dashboard message', 'Added Petient %s') % petient
-            # send_set_password_email.delay(customer.pk)
-        messages.success(request, msg)
-        return redirect('dashboard:petient-list')
+    return TemplateResponse(request, 'dashboard/petient/form_new.html')
 
-    ctx = {'form': form, 'petient': petient}
-    return TemplateResponse(request, 'dashboard/petient/form.html', ctx)
+def ajax_form(request):
+    if request.is_ajax():
+        first_name = request.POST.get('first_name', None) 
+        last_name = request.POST.get('last_name', None)
+        birth_date = request.POST.get('birth_date', None)
+
+        data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "birth_date": birth_date
+        }
+        User.objects.create(**data)
+
+        return JsonResponse({'msg':'Your form has been submitted successfully',
+                            'status': True})
+
+    
+
 
 def edit_petient(request, pk=None):
     petient = get_object_or_404(User, pk=pk)
